@@ -1,5 +1,8 @@
-// Init weather object
-const weather = new Weather('New Delhi', 'INDIA');
+// Init Local Storage
+const storage = new Storage();
+
+// Get Stored Location Data
+const weatherLocation = storage.getLocationData();
 
 // Init UI
 const ui = new UI();
@@ -7,12 +10,19 @@ const ui = new UI();
 // Get weather on DOM Load
 document.addEventListener('DOMContentLoaded', getWeather);
 
+// Init weather Object
+const weather = new Weather(weatherLocation.city, weatherLocation.state);
+
 // Change Location Event
 document.getElementById('w-change-btn').addEventListener('click', (e) => {
   const city = document.getElementById('city').value;
   const state = document.getElementById('state').value;
 
-  weather.changeLocation('Miami', 'FL');
+  // Change Location
+  weather.changeLocation(city, state);
+
+  // Set Location in Local Storage
+  storage.setLocationData(city, state);
 
   // Get and Display weather
   getWeather();
